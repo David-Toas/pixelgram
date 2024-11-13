@@ -9,17 +9,26 @@ import {
 import { Button } from "./ui/button";
 
 import { useEffect, useRef, useState } from "react";
-import { Activity, Bookmark, ChevronLeft, Menu, Moon, Settings, Sun, } 
-from "lucide-react"; // LogOut,
+import {
+  Activity,
+  Bookmark,
+  ChevronLeft,
+  Menu,
+  Moon,
+  Settings,
+  Sun,
+  LogOut,
+} from "lucide-react";
 import { Label } from "./ui/label";
 import { Switch } from "./ui/switch";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
+import { signOut } from "next-auth/react";
 function MoreDropdown() {
   const [open, setOpen] = useState(false);
   const [showModeToggle, setShowModeToggle] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const { theme, setTheme} = useTheme();
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     // close the dropdown when the user clicks outside
@@ -51,14 +60,16 @@ function MoreDropdown() {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent ref={ref} 
-      className={cn(
-        "dark:bg-neutral-800 w-64 !rounded-xl !p-0 transition-opacity",
-        !open && "opacity-0"
-      )}
-      align="end"
-      alignOffset={-40}>
-         {!showModeToggle && (
+      <DropdownMenuContent
+        ref={ref}
+        className={cn(
+          "dark:bg-neutral-800 w-64 !rounded-xl !p-0 transition-opacity",
+          !open && "opacity-0"
+        )}
+        align="end"
+        alignOffset={-40}
+      >
+        {!showModeToggle && (
           <>
             <DropdownMenuItem className="menuItem">
               <Settings size={20} />
@@ -81,14 +92,14 @@ function MoreDropdown() {
               <p>Switch appearance</p>
             </DropdownMenuItem>
 
-            {/* <DropdownMenuItem className="menuItem" onClick={() => signOut()}>
+            <DropdownMenuItem className="menuItem" onClick={() => signOut()}>
               <LogOut size={20} />
               <p>Log out</p>
-            </DropdownMenuItem> */}
+            </DropdownMenuItem>
           </>
         )}
 
-{showModeToggle && (
+        {showModeToggle && (
           <>
             <div className="flex items-center border-b border-gray-200 dark:border-neutral-700 py-3.5 px-2.5">
               <ChevronLeft size={18} onClick={() => setShowModeToggle(false)} />
